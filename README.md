@@ -1,25 +1,6 @@
 Exercise 1 : Concurrency Essentials
 ===================================
 
-0: Generate Github personal token
-----------------------------
-
-From August of 2021 you need a token (instead of a password) to use git from the command line.
-Follow these steps:
- - Click the drop-down menu by your profile picture
- - Click "Settings"
- - Click "Developer settings" 
- - Personal access tokens
- - Generate new token
- - In Note, write: "Sanntid", for example
- - Expiration: July of 2023 (after the project ends)
- - Tick off (at least) `repo`, `admin:org_hook` and `delete_repo`
- - Generate token
- 
-**IMPORTANT: copy the token before exiting the page, it is only generated this one time.**
-
-Use the token when prompted for a password when cloning the repo.
-
 1: If you are not on the lab
 ----------------------------
 
@@ -33,24 +14,7 @@ This exercise does not require that you use the machines at the real-time lab. H
 
 Go has an [interactive tour](http://tour.golang.org/list) you can take. Go's syntax is a bit different, so it may be worth skimming through, or at least using as a quick reference.
 
-2: Version control
-------------------
-
-If you can read this text, you have already taken your first steps in starting to use a version control system.
-
-A version control system is a tool that helps a group of people work on the same files in a systematic and safe manner, allowing multiple users to make changes to the same file and merge the changes later. It is also possible to create diverging branches so that independent areas of development can happen in parallel, and then have these merged safely later. Version control systems also keep track of all previous versions of files, so that you can revert any or all changes made since a given date.
-
-In this course, we will be using a GitHub Classroom, where you will find the assignment texts, project description, and all the code related to the project. You will be given private repositories on the TTK4145 organization, which means that teachers and student assistants will have access to your code by default, but other students will not. You can create issues that reference specific assignment tasks or part of your project code while tagging the student assistants to get their attention.
-
-You will not be able to complete this exercise without a very basic practical understanding of git. Unless you're already familiar with git, it's highly recommended to have a look at the following resources before moving on. Don't let the feeling that you have to google everything discourage you, this is perfectly fine, even expected. And don't forget that the student assistants are there to help you.
-
-- Do the [interactive tutorial](https://try.github.io/)
-- [Feature branch workflow](https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow)
-
-Some prefer the command line while some prefer something graphical, both are fine. An overview of graphical git clients can be found [here](https://git-scm.com/downloads/guis/). Some of these have already been installed on the lab computers, but feel free to install whatever you prefer.
-
-
-3: Sharing a variable
+2: Sharing a variable
 ---------------------
 
 Implement this in C and Go:
@@ -74,10 +38,10 @@ thread_2:
             
 There is some starter code in the folder [shared variable](./3%20-%20shared%20variable). Fill out the missing code and run the programs.
 
-Create a new file called `result.md` inside this directory explaining what happens, and why (Hint: the result should not always be zero...). Then add, commit, and push the updated code and the results file, and verify that you can see the updated version on the web.
+You should create a new file in which you explain what happens and why.  
+*Hint: the result should not always be 0.*
 
-
-4: Sharing a variable, but properly
+3: Sharing a variable, but properly
 -----------------------------------
 
 Modify the code from the previous part such that the final result is always zero.
@@ -88,7 +52,7 @@ In your solution, make sure that the two threads intermingle, and don't just run
 
 ### C
 
- - POSIX has both mutexes ([`pthread_mutex_t`](http://pubs.opengroup.org/onlinepubs/7990989775/xsh/pthread.h.html)) and semaphores ([`sem_t`](http://pubs.opengroup.org/onlinepubs/7990989775/xsh/semaphore.h.html)). Which one should you use? Add a comment (anywhere in the C file, or in the `results.md` file) explaining why your choice is the correct one.
+ - POSIX has both mutexes ([`pthread_mutex_t`](http://pubs.opengroup.org/onlinepubs/7990989775/xsh/pthread.h.html)) and semaphores ([`sem_t`](http://pubs.opengroup.org/onlinepubs/7990989775/xsh/semaphore.h.html)). Which one should you use? Add a comment explaining why your choice is the correct one.
  - Acquire the lock, do your work in the critical section, and release the lock.
  - Reminder: Make sure that the threads get a chance to interleave their execution.
 
@@ -110,9 +74,7 @@ Remember from before where we had no good way of waiting for a goroutine to fini
 
 ---
 
-Commit and push your code changes to GitHub.
-
-5: Bounded buffer
+4: Bounded buffer
 -----------------
 
 From the previous part, it may appear that message passing requires a lot more code to do the same work - so naturally, in this part the opposite will be the case. In the folder [bounded buffer](./5%20-%20bounded%20buffer) you will find the starting point for a *bounded buffer* problem.
@@ -161,9 +123,7 @@ The program will deadlock at the end (main is waiting forever - as it should, an
 
 ---
 
-As usual - commit and push your changes to GitHub.
-
-6: Some questions
+5: Some questions
 -----------------
 
 The file [*questions*](/questions.md) contains a few questions regarding some of the concepts this exercise covers, as well as some broader engineering questions. Modify the file with your answers.
@@ -175,7 +135,7 @@ Things to think about until next time
 
 This part of the exercise is not for handing in, just for thinking about. Talk to other groups, assistants, or even people who have taken the course in previous years.
 
-7: Thinking about elevators
+6: Thinking about elevators
 ---------------------------
 
 The main problem of the project is to ensure that no orders are lost. 
@@ -193,7 +153,7 @@ Maybe try thinking about the [worst-case](http://xkcd.com/748/) behavior of the 
  - What if the network cable is suddenly disconnected? Then re-connected?
  - What if the elevator car never arrives at its destination?
 
-8: Thinking about languages
+7: Thinking about languages
 ---------------------------
 
 In the next exercises (the first of which being networking) and the project, you can use any language of your own choice. You are of course free to change your mind at any time - you do not have to do the exercises and the project in the same language (or even different parts of the same exercise, for that matter). But you may want to start doing some research already now.
@@ -209,7 +169,7 @@ Here are a few things you should consider:
 Extra
 =====
 
-9: Multithreading in other languages
+8: Multithreading in other languages
 ------------------------------------
 
 This is an optional exercise. You are not recommended to do this for "completion" or "achievement points". You should only do it if you're interested in learning more about how different languages can protect against data races, or you're considering to use one of these languages in your project. 
@@ -233,8 +193,3 @@ The primitive integer types in rust are not "thread safe", and thus not `Sync`. 
 A [`Mutex`](https://doc.rust-lang.org/std/sync/struct.Mutex.html) takes something that is `Send` and makes it `Sync`, while [`mpsc`](https://doc.rust-lang.org/std/sync/mpsc/index.html) allows you to create "channels" for data types that implement `Send`.
 
 The lock based approach has been taken in the starter code, you are of course free to re-write it into the `mpsc` approach if you feel like it.
-
-
-
-
-
