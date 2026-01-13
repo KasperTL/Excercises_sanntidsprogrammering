@@ -21,13 +21,6 @@ void* decrementingThreadFunction(){
     return NULL;
 };
 
-void* decrementingThreadFunction(){
-    // TODO: decrement i 1_000_000 times
-    for (int i = 0; i < 1000000; i++); {
-        i--;
-    };
-    return NULL;
-}
 
 
 int main() {
