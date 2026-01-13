@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Exercise 1 : Concurrency Essentials
 ===================================
 
@@ -193,3 +194,6 @@ The primitive integer types in rust are not "thread safe", and thus not `Sync`. 
 A [`Mutex`](https://doc.rust-lang.org/std/sync/struct.Mutex.html) takes something that is `Send` and makes it `Sync`, while [`mpsc`](https://doc.rust-lang.org/std/sync/mpsc/index.html) allows you to create "channels" for data types that implement `Send`.
 
 The lock based approach has been taken in the starter code, you are of course free to re-write it into the `mpsc` approach if you feel like it.
+=======
+# Excercises_sanntidsprogrammering
+>>>>>>> 96dde1e226100dd2d13e7acf53cac55b5a7acc92
