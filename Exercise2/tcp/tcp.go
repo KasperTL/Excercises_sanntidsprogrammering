@@ -4,37 +4,52 @@ import (
 	"fmt"
 	"log"
 	"net"
-	"time"
 )
 
 func listening_tcp(conn net.Conn) {
+	buf := make([]byte, 1024)
+	var message []byte
 
-	welcome_buffer := make([]byte, 1024)
 	for {
-		n, err := conn.Read(welcome_buffer)
+		n, err := conn.Read(buf)
 		if err != nil {
 			log.Printf("Read error: %v", err)
+			return
 		}
-		fmt.Printf("Got message from %s", string(welcome_buffer[:n]))
+
+		message = append(message, buf[:n]...)
+
+		for {
+			idx := -1
+			for i, b := range message {
+				if b == 0 {
+					idx = i
+					break
+				}
+			}
+			if idx == -1 {
+				break
+			}
+
+			fmt.Printf("Got message: %s\n", string(message[:idx]))
+			message = message[idx+1:]
+		}
 	}
 }
 
 func writing_tcp(conn net.Conn) {
-	for {
-		message := []byte("Test group 17")
-		_, err := conn.Write(message)
-		if err != nil {
-			fmt.Println("Write error:", err)
-			return
-		}
-		time.Sleep(time.Second)
+	message := []byte("Connect to: 10.100.23.11:20017\x00")
+	_, err := conn.Write(message)
+	if err != nil {
+		fmt.Println("Write error:", err)
+		return
 	}
 }
 
 func main() {
 
 	serverIP := "10.100.23.11"
-	portNumber := "34933"
+	portNumber := "33546"
 
 	raddr, err := net.ResolveTCPAddr("tcp", serverIP+":"+portNumber)
 	if err != nil {
@@ -46,6 +61,7 @@ func main() {
 		fmt.Println("Dial error:", err)
 		return
 	}
+	fmt.Println("Connected to server:", conn.RemoteAddr())
 
 	defer conn.Close()
 
