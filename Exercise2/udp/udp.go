@@ -8,7 +8,7 @@ import (
 
 func listenServerUDP() {
 	//Setting up the UDP adress
-	addr, err := net.ResolveUDPAddr("udp", "0.0.0.0:30000")
+	addr, err := net.ResolveUDPAddr("udp", "0.0.0.0:20017")
 	if err != nil {
 		log.Fatal("Couldnt resolve address:", err)
 	}
@@ -39,26 +39,44 @@ func listenServerUDP() {
 	}
 }
 
-func readfromServerUDP() {
-	raddr, err := net.ResolveUDPAddr("udp", ":20017")
-
-	msg, err := net.ListenUDP("udp", raddr)
+func writeToServerUDP() {
+	raddr, err := net.ResolveUDPAddr("udp", "10.100.23.11:20017")
 	if err != nil {
-		fmt.Println("Error:", err)
+		fmt.Println("Resolve error:", err)
+		return
+	}
+	//resolve a string network address into a *netUDPAddr structure
+	//requireed by net.DialAddr and net.ListenUDP to establish UDP connection
+
+	conn, err := net.DialUDP("udp", nil, raddr)
+	if err != nil {
+		fmt.Println("Dial error:", err)
+		return
+	}
+	defer conn.Close()
+
+	message := []byte("Test group 17")
+	_, err = conn.Write(message)
+	if err != nil {
+		fmt.Println("Write error:", err)
 		return
 	}
 
 	buffer := make([]byte, 1024)
 
-	msg.Read(buffer[0:])
+	n, err := conn.Read(buffer)
+	if err != nil {
+		fmt.Println("Read error:", err)
+		return
+	}
 
-	fmt.Print("From server: ", string(buffer[0:]))
-	defer msg.Close()
+	fmt.Printf("Recived from %s: %s\n", raddr, string(buffer[:n]))
 }
 
 func main() {
-	for {
-		go listenServerUDP()
-	}
 
+	go listenServerUDP()
+	go writeToServerUDP()
+
+	select {}
 }
