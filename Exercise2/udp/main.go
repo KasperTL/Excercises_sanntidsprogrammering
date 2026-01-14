@@ -6,7 +6,7 @@ import (
 	"net"
 )
 
-func main() {
+func listenServerUDP() {
 	//Setting up the UDP adress
 	addr, err := net.ResolveUDPAddr("udp", "0.0.0.0:30000")
 	if err != nil {
@@ -37,4 +37,28 @@ func main() {
 			log.Printf("Write error: %v", err)
 		}
 	}
+}
+
+func readfromServerUDP() {
+	raddr, err := net.ResolveUDPAddr("udp", ":20017")
+
+	msg, err := net.ListenUDP("udp", raddr)
+	if err != nil {
+		fmt.Println("Error:", err)
+		return
+	}
+
+	buffer := make([]byte, 1024)
+
+	msg.Read(buffer[0:])
+
+	fmt.Print("From server: ", string(buffer[0:]))
+	defer msg.Close()
+}
+
+func main() {
+	for {
+		go listenServerUDP()
+	}
+
 }
