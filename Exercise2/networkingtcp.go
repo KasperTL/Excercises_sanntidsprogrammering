@@ -30,25 +30,27 @@ func readFromServerTCP() {
 	}
 	defer conn.Close()
 
+	for {
 	// Read the server's response
-	buffer := make([]byte, 1024)
-	n, err := conn.Read(buffer)
-	if err != nil {
-		fmt.Println("Error reading:", err)
-		return
+		buffer := make([]byte, 1024)
+		n, err := conn.Read(buffer)
+		if err != nil {
+			fmt.Println("Error reading:", err)
+			return
+		}
+		
+		// Print the server's response
+		fmt.Printf("Server response: %s\n", buffer[:n])
+
+		n, err = conn.Read(buffer)
+		if err != nil {
+			fmt.Println("Error reading:", err)
+			return
+		}
+
+		// Print the server's response
+		fmt.Printf("Server response: %s\n", buffer[:n])
 	}
-
-	// Print the server's response
-	fmt.Printf("Server response: %s\n", buffer[:n])
-
-	n, err = conn.Read(buffer)
-	if err != nil {
-		fmt.Println("Error reading:", err)
-		return
-	}
-
-	// Print the server's response
-	fmt.Printf("Server response: %s\n", buffer[:n])
 }
 
 func main() {
