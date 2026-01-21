@@ -24,18 +24,13 @@ func listenServerUDP() {
 	buffer := make([]byte, 1024)
 	for {
 		// Read client message
-		n, clientAddr, err := conn.ReadFromUDP(buffer)
+		_, clientAddr, err := conn.ReadFromUDP(buffer)
 		if err != nil {
 			log.Printf("Read error: %v", err)
 			continue
 		}
 		fmt.Printf("Got message from %s: %s\n", clientAddr, string(buffer))
 
-		// Echo back
-		_, err = conn.WriteToUDP(buffer[:n], clientAddr)
-		if err != nil {
-			log.Printf("Write error: %v", err)
-		}
 	}
 }
 

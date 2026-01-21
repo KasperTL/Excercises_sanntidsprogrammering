@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net"
+	"time"
 )
 
 func listening_tcp(conn net.Conn) {
@@ -38,8 +39,16 @@ func listening_tcp(conn net.Conn) {
 }
 
 func writing_tcp(conn net.Conn) {
-	message := []byte("Connect to: 10.100.23.11:20017\x00")
+	message := []byte("Connect to: 10.100.23.11:20019\x00")
 	_, err := conn.Write(message)
+	if err != nil {
+		fmt.Println("Write error:", err)
+		return
+	}
+	time.Sleep(time.Millisecond)
+
+	message2 := []byte("HELLO 2 All Connect to: 10.100.23.11:20019\x00")
+	_, err = conn.Write(message2)
 	if err != nil {
 		fmt.Println("Write error:", err)
 		return
